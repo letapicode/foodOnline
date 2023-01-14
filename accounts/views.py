@@ -18,7 +18,7 @@ from django.core.exceptions import PermissionDenied
 
 
 #Custom Decorator: Restrict the vendor from accessing the customer page
-def check_role_vender(user):
+def check_role_vendor(user):
     if user.role == 1:
         return True
     else:
@@ -177,7 +177,7 @@ def custDashboard(request):
     return render(request, 'accounts/custDashboard.html')
 
 @login_required(login_url='login')
-@user_passes_test(check_role_vender)
+@user_passes_test(check_role_vendor)
 def vendorDashboard(request):
     return render(request, 'accounts/vendorDashboard.html')
 
