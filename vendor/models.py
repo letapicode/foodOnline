@@ -4,10 +4,10 @@ from accounts.models import User, UserProfile
 from accounts.utils import send_notification
 from datetime import time, date, datetime
 
-# Create your models here.
+
 class Vendor(models.Model):
-    user = models.OneToOneField(User, related_name='user',on_delete=models.CASCADE)
-    user_profile = models.OneToOneField(UserProfile, related_name='userprofile',on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
+    user_profile = models.OneToOneField(UserProfile, related_name='userprofile', on_delete=models.CASCADE)
     vendor_name = models.CharField(max_length=50)
     vendor_slug = models.SlugField(max_length=100, unique=True)
     vendor_license = models.ImageField(upload_to='vendor/license')
@@ -17,32 +17,31 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.vendor_name
-    
 
     def is_open(self):
         # Check current day's opening hours.
         today_date = date.today()
         today = today_date.isoweekday()
-
+        
         current_opening_hours = OpeningHour.objects.filter(vendor=self, day=today)
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
 
         is_open = None
         for i in current_opening_hours:
-            start = str(datetime.strptime(i.from_hour, "%I:%M %p").time())
-            end = str(datetime.strptime(i.to_hour, "%I:%M %p").time())
-            if current_time > start and current_time < end:
-                is_open = True
-                break
-            else:
-                is_open = False
+            if not i.is_closed:
+                start = str(datetime.strptime(i.from_hour, "%I:%M %p").time())
+                end = str(datetime.strptime(i.to_hour, "%I:%M %p").time())
+                if current_time > start and current_time < end:
+                    is_open = True
+                    break
+                else:
+                    is_open = False
         return is_open
 
-    
     def save(self, *args, **kwargs):
         if self.pk is not None:
-            #Update
+            # Update
             orig = Vendor.objects.get(pk=self.pk)
             if orig.is_approved != self.is_approved:
                 mail_template = 'accounts/emails/admin_approval_email.html'
@@ -51,14 +50,14 @@ class Vendor(models.Model):
                     'is_approved': self.is_approved,
                 }
                 if self.is_approved == True:
-                    #send notification email
+                    # Send notification email
                     mail_subject = "Congratulations! Your restaurant has been approved."
                     send_notification(mail_subject, mail_template, context)
                 else:
+                    # Send notification email
                     mail_subject = "We're sorry! You are not eligible for publishing your food menu on our marketplace."
                     send_notification(mail_subject, mail_template, context)
         return super(Vendor, self).save(*args, **kwargs)
-
 
 
 DAYS = [
@@ -70,7 +69,6 @@ DAYS = [
     (6, ("Saturday")),
     (7, ("Sunday")),
 ]
-
 
 HOUR_OF_DAY_24 = [(time(h, m).strftime('%I:%M %p'), time(h, m).strftime('%I:%M %p')) for h in range(0, 24) for m in (0, 30)]
 class OpeningHour(models.Model):
@@ -86,9 +84,3 @@ class OpeningHour(models.Model):
 
     def __str__(self):
         return self.get_day_display()
-
-
-    
-    
-
-
