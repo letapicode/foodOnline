@@ -15,4 +15,4 @@ def RequestObjectMiddleware(get_response):
 
         return response
 
-    return 
+    return middleware

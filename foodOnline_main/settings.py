@@ -18,6 +18,7 @@ from django import conf
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -29,7 +30,6 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = ['173.255.225.123','127.0.0.1', 'tokne.online', 'www.tokne.online']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'accounts',
     'vendor',
     'menu',
@@ -56,9 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'orders.request_object.RequestObjectMiddleware', # custom middleware created to access the request object in models.py
+    'orders.request_object.RequestObjectMiddleware', # custom middleware created to access the request object in models.py
 ]
-
 
 ROOT_URLCONF = 'foodOnline_main.urls'
 
@@ -83,7 +83,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'foodOnline_main.wsgi.application'
 
@@ -141,12 +140,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR /'static'
 STATICFILES_DIRS = [
     'foodOnline_main/static'
 ]
-
 
 # Media files configuration
 MEDIA_URL = '/media/'
@@ -163,17 +161,15 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-
-#Email configuration
-EMAIL_HOST=config('EMAIL_HOST')
-EMAIL_PORT=config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER=config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD') 
-EMAIL_USE_TLS=True
+# Email configuration
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL='foodOnline Marketplace <koncusnai@gmail.com>'
 
 GOOGLE_API_KEY = config('GOOGLE_API_KEY')
-
 
 if DEBUG == True:
     os.environ['PATH'] = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo') + ';' + os.environ['PATH']
@@ -182,8 +178,7 @@ if DEBUG == True:
 
 PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
 
-RZP_KEY_ID = config('RZP_KEY_ID')
-RZP_KEY_SECRET = config('RZP_KEY_SECRET')
-
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
+RZP_KEY_ID = config('RZP_KEY_ID')
+RZP_KEY_SECRET = config('RZP_KEY_SECRET')

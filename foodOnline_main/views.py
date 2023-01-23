@@ -21,7 +21,7 @@ def get_or_set_current_location(request):
         return lng, lat
     else:
         return None
-        
+
 
 def home(request):
     if get_or_set_current_location(request) is not None:

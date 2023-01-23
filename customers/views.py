@@ -59,3 +59,4 @@ def order_detail(request, order_number):
         return render(request, 'customers/order_detail.html', context)
     except:
         return redirect('customer')
+    

@@ -1,6 +1,7 @@
 from django import forms
-from .models import Category, FoodItem
+
 from accounts.validators import allow_only_images_validator
+from .models import Category, FoodItem
 
 
 class CategoryForm(forms.ModelForm):
