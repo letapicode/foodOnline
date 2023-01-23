@@ -4,7 +4,7 @@ from accounts.forms import UserInfoForm, UserProfileForm
 from accounts.models import UserProfile
 from django.contrib import messages
 from orders.models import Order, OrderedFood
-import json as simplejson
+import simplejson as json
 
 
 @login_required(login_url='login')
@@ -49,7 +49,7 @@ def order_detail(request, order_number):
         subtotal = 0
         for item in ordered_food:
             subtotal += (item.price * item.quantity)
-        tax_data = simplejson.loads(order.tax_data)
+        tax_data = json.loads(order.tax_data)
         context = {
             'order': order,
             'ordered_food': ordered_food,
