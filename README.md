@@ -41,5 +41,8 @@ The project underwent rigorous manual testing to ensure functionality, reliabili
 ## Conclusion
 Despite being part of a large Udemy project, the Django Multi-vendor Restaurant Marketplace project successfully achieved its objective of developing a comprehensive multi-vendor restaurant marketplace. The project offers a robust demonstration of web application development using Python and Django, emphasizing the importance of user-centric design, comprehensive testing, and adaptable coding practices.
 
-Live: https://tokne.online/
-Udemy: https://www.udemy.com/course/python-django-real-world-project-multi-vendor-restaurant/
+Live: 
+https://tokne.online/
+
+Udemy: 
+https://www.udemy.com/course/python-django-real-world-project-multi-vendor-restaurant/
